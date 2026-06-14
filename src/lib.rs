@@ -30,7 +30,7 @@ impl CompactSize {
             bytes.extend_from_slice(&(self.value as u32).to_le_bytes());
         } else {
             bytes.push(0xFF);
-            bytes.extend_from_slice(&(self.value as u64).to_le_bytes());
+            bytes.extend_from_slice(&self.value.to_le_bytes());
         }
         bytes
     }
@@ -65,7 +65,7 @@ impl CompactSize {
                 ]);
                 Ok((CompactSize::new(value), 9))
             }
-            _ => Err(BitcoinError::InvalidFormat),
+            // all u8 values are covered above; no other prefixes are valid
         }
     }
 }
